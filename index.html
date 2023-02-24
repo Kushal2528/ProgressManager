@@ -2,11 +2,29 @@
 <html>
 
 <head>
+
     <style>
+        .underlined {
+            position: relative;
+            margin-right: 1rem;
+        }
+
+        .underlined:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            height: 7px;
+            width: 100%;
+            border: solid 2px #cb1829;
+            border-color: #cb1829 transparent transparent transparent;
+            border-radius: 30%;
+        }
+
         .grid-container {
             display: grid;
-            grid-template-columns: auto auto auto auto;
-            height: 80px;
+            grid-template-columns: auto auto auto auto auto auto auto auto auto;
+            height: 20px;
             width: 80px;
             padding: 10px;
         }
@@ -16,31 +34,53 @@
             border: 1px solid rgba(0, 0, 0, 0.8);
             padding: 20px;
             font-size: 20px;
+            width: 80px;
             text-align: center;
         }
-
-        button {
-            width: 100%;
-            font-size: 30px;
-
-        }
     </style>
+
 </head>
 
 <body>
 
-    <h1>Grid Elements</h1>
 
-    <p>A Grid Layout must have a parent element with the <em>display</em> property set to <em>grid</em> or
-        <em>inline-grid</em>.
-    </p>
+    <h1 class="underlined" style="text-align: center; font-family: Georgia">Progress Manager</h1>
 
-    <p>Direct child element(s) of the grid container automatically becomes grid items.</p>
+    <p style="font-family: Arial">Enter number of questions: <span><input id="gridNumber" type="text"
+                style="border-radius: 10px; width:50px"></span> <span><button
+                onclick="generateGrid();this.disabled=true">Get
+                grid</button></span></p>
 
-    <div class="grid-container">
-        div.grid-item*124>button[id="button$" onclick="handleClick(this.id)"]{$}
+    <div class="grid-container" id="parentgrid">
     </div>
-
 </body>
+<script>
+    function handleClick(id) {
+        checkBox = document.getElementById(id);
+        if (checkBox.checked == true) {
+            document.getElementById(`grid${id.slice(6)}`).style.background = "#00FF00";
+        } else {
+            document.getElementById(`grid${id.slice(6)}`).style.background = "#FFFFFF";
+        }
+
+    }
+
+    function generateGrid() {
+        x = document.getElementById("gridNumber").value;
+        g = parseInt(x);
+        for (let i = 1; i <= g; i++) {
+            parent = document.getElementById("parentgrid");
+            div = document.createElement('div');
+            div.id = 'grid' + i;
+            div.innerHTML = `<input type="checkbox" id="button${i}"
+            onclick="handleClick(this.id)">${i}</input>`
+            div.className = "grid-item";
+            parent.appendChild(div);
+        }
+
+
+    }
+
+</script>
 
 </html>
